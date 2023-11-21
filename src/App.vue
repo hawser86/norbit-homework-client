@@ -9,11 +9,16 @@ export default {
   data: () => ({
     boatTrack: [],
     isRecordingRunning: false,
-    socket: io("http://localhost:9876")
+    socket: io("http://localhost:9876"),
+    trackList: [],
+    selectedTrack: null
   }),
   methods: {
     updateRecordingStatus() {
       this.socket.emit('update-recording-status', this.isRecordingRunning);
+    },
+    loadTrack() {
+      this.socket.emit('load-track', this.selectedTrack);
     }
   },
   mounted() {
@@ -27,6 +32,10 @@ export default {
 
     this.socket.on('update-recording-status', isRecordingRunning => {
       this.isRecordingRunning = isRecordingRunning;
+    });
+
+    this.socket.on('track-list', trackList => {
+      this.trackList = trackList;
     });
   }
 }
@@ -46,6 +55,9 @@ export default {
       <Controls
           v-model:is-recording-running="isRecordingRunning"
           @update:is-recording-running="updateRecordingStatus()"
+          :track-list="trackList"
+          v-model:selected-track="selectedTrack"
+          @load-track="loadTrack()"
       ></Controls>
     </div>
   </div>
