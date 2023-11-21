@@ -1,12 +1,14 @@
 <script>
 import { io } from 'socket.io-client';
 import Map from './components/Map.vue';
+import Controls from './components/Controls.vue';
 
 export default {
   name: 'App',
-  components: { Map },
+  components: { Map, Controls },
   data: () => ({
-    boatPosition: { latitude: 0, longitude: 0, heading: 0 }
+    boatPosition: { latitude: 0, longitude: 0, heading: 0 },
+    isRecordingRunning: false
   }),
   mounted() {
     const socket = io("http://localhost:9876");
@@ -29,7 +31,9 @@ export default {
     </div>
 
     <div class="row footer">
-      footer...
+      <Controls
+          v-model:is-recording-running="isRecordingRunning"
+      ></Controls>
     </div>
   </div>
 </template>
@@ -39,6 +43,10 @@ export default {
   display: flex;
   flex-flow: column;
   height: 100%;
+}
+
+.box .row {
+  margin-bottom: 10px;
 }
 
 .box .row.header {
