@@ -66,7 +66,7 @@ export default {
       ],
       view: new View({
         center: fromLonLat([20.73998593, 48.21339894]),
-        zoom: 16
+        zoom: 18
       })
     });
   }

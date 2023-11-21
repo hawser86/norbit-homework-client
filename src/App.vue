@@ -1,19 +1,19 @@
 <script>
-import Map from './components/Map.vue';
 import { io } from 'socket.io-client';
+import Map from './components/Map.vue';
 
 export default {
   name: 'App',
   components: { Map },
   data: () => ({
-    dummyBoatPosition: {
-      latitude: 48.21339894,
-      longitude: 20.73998593,
-      heading: 3.470315226
-    }
+    boatPosition: { latitude: 0, longitude: 0, heading: 0 }
   }),
   mounted() {
     const socket = io("http://localhost:9876");
+
+    socket.on('boat-position', position => {
+      this.boatPosition = position;
+    });
   }
 }
 </script>
@@ -25,7 +25,7 @@ export default {
     </div>
 
     <div class="row content">
-      <Map :boat-position="dummyBoatPosition"></Map>
+      <Map :boat-position="boatPosition"></Map>
     </div>
 
     <div class="row footer">
