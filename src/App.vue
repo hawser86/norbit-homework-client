@@ -8,13 +8,21 @@ export default {
   components: { Map, Controls },
   data: () => ({
     boatPosition: { latitude: 0, longitude: 0, heading: 0 },
-    isRecordingRunning: false
+    isRecordingRunning: false,
+    socket: io("http://localhost:9876")
   }),
+  methods: {
+    updateRecordingStatus() {
+      this.socket.emit('update-recording-status', this.isRecordingRunning);
+    }
+  },
   mounted() {
-    const socket = io("http://localhost:9876");
-
-    socket.on('boat-position', position => {
+    this.socket.on('boat-position', position => {
       this.boatPosition = position;
+    });
+
+    this.socket.on('update-recording-status', isRecordingRunning => {
+      this.isRecordingRunning = isRecordingRunning;
     });
   }
 }
@@ -33,6 +41,7 @@ export default {
     <div class="row footer">
       <Controls
           v-model:is-recording-running="isRecordingRunning"
+          @update:is-recording-running="updateRecordingStatus()"
       ></Controls>
     </div>
   </div>
