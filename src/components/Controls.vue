@@ -25,19 +25,21 @@ export default {
       ></ToggleSwitch>
     </div>
 
-    <div class="block">
-      <h3>Recordings</h3>
-    </div>
-    <div class="block">
-      <select :value="selectedTrackId" @change="$emit('update:selectedTrackId', Number($event.target.value))">
-        <option v-for="track in trackList" :value="track.id">
-          {{ track.name }}
-        </option>
-      </select>
-    </div>
-    <div class="block">
-      <button @click="$emit('loadTrack')">Load track</button>
-    </div>
+    <template v-if="trackList.length > 0">
+      <div class="block">
+        <h3>Recordings</h3>
+      </div>
+      <div class="block">
+        <select :value="selectedTrackId" @change="$emit('update:selectedTrackId', Number($event.target.value))">
+          <option v-for="track in trackList" :value="track.id">
+            {{ track.name }}
+          </option>
+        </select>
+      </div>
+      <div class="block">
+        <button @click="$emit('loadTrack')">Load track</button>
+      </div>
+    </template>
   </div>
 </template>
 
