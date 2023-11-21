@@ -8,17 +8,18 @@ export default {
   components: { Map, Controls },
   data: () => ({
     boatTrack: [],
+    loadedTrack: [],
     isRecordingRunning: false,
     socket: io("http://localhost:9876"),
     trackList: [],
-    selectedTrack: null
+    selectedTrackId: null
   }),
   methods: {
     updateRecordingStatus() {
       this.socket.emit('update-recording-status', this.isRecordingRunning);
     },
     loadTrack() {
-      this.socket.emit('load-track', this.selectedTrack);
+      this.socket.emit('load-track', this.selectedTrackId);
     }
   },
   mounted() {
@@ -37,6 +38,11 @@ export default {
     this.socket.on('track-list', trackList => {
       this.trackList = trackList;
     });
+
+    this.socket.on('loaded-track', (trackId, loadedTrack) => {
+      this.selectedTrackId = trackId;
+      this.loadedTrack = loadedTrack;
+    });
   }
 }
 </script>
@@ -48,7 +54,7 @@ export default {
     </div>
 
     <div class="row content">
-      <Map :boat-track="boatTrack"></Map>
+      <Map :boat-track="boatTrack" :loaded-track="loadedTrack"></Map>
     </div>
 
     <div class="row footer">
@@ -56,7 +62,7 @@ export default {
           v-model:is-recording-running="isRecordingRunning"
           @update:is-recording-running="updateRecordingStatus()"
           :track-list="trackList"
-          v-model:selected-track="selectedTrack"
+          v-model:selected-track-id="selectedTrackId"
           @load-track="loadTrack()"
       ></Controls>
     </div>

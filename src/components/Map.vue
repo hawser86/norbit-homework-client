@@ -11,7 +11,8 @@ import VectorSource from 'ol/source/Vector';
 export default {
   name: "Map",
   props: {
-    boatTrack: Array
+    boatTrack: Array,
+    loadedTrack: Array
   },
   data: () => ({
     source: new VectorSource()
@@ -27,14 +28,12 @@ export default {
   methods: {
     refreshBoatTrack() {
       this.source.clear();
-      if (this.boatTrack.length === 0) return;
 
-      this.source.addFeatures([this.createTriangle(this.boatTrack[this.boatTrack.length - 1])]);
-
-      const lines = this.boatTrack
-          .slice(0, -1)
-          .map((position, index) => this.createLine(position, this.boatTrack[index + 1]));
-      this.source.addFeatures(lines);
+      if (this.boatTrack.length > 0) {
+        this.source.addFeatures([this.createTriangle(this.boatTrack[this.boatTrack.length - 1])]);
+      }
+      this.source.addFeatures(this.createLineList(this.boatTrack, 'red'));
+      this.source.addFeatures(this.createLineList(this.loadedTrack, 'black'));
     },
     createTriangle({ latitude, longitude, heading }) {
       const stroke = new Stroke({ color: 'black', width: 2 });
@@ -55,8 +54,13 @@ export default {
 
       return feature;
     },
-    createLine(from, to) {
-      const stroke = new Stroke({ color: 'red', width: 2 });
+    createLineList(track, color) {
+      return track
+          .slice(0, -1)
+          .map((position, index) => this.createLine(position, track[index + 1],color));
+    },
+    createLine(from, to, color) {
+      const stroke = new Stroke({ color, width: 2 });
       const style = new Style({
           stroke: stroke,
       });

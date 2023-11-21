@@ -6,10 +6,10 @@ export default {
   components: { ToggleSwitch },
   props: {
     isRecordingRunning: Boolean,
-    selectedTrack: Number,
+    selectedTrackId: Number,
     trackList: []
   },
-  emits: ['update:isRecordingRunning', 'update:selectedTrack', 'loadTrack']
+  emits: ['update:isRecordingRunning', 'update:selectedTrackId', 'loadTrack']
 }
 </script>
 
@@ -29,7 +29,7 @@ export default {
       <h3>Recordings</h3>
     </div>
     <div class="block">
-      <select :value="selectedTrack" @change="$emit('update:selectedTrack', Number($event.target.value))">
+      <select :value="selectedTrackId" @change="$emit('update:selectedTrackId', Number($event.target.value))">
         <option v-for="track in trackList" :value="track.id">
           {{ track.name }}
         </option>
