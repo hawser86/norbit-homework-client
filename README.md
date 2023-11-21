@@ -1,35 +1,44 @@
 # norbit-homework-client
 
-This template should help get you started developing with Vue 3 in Vite.
+The frontend part of the solution for the Web developer homework for Norbit Hungary.
 
-## Recommended IDE Setup
+The backend part can be found [here](https://github.com/hawser86/norbit-homework-server).
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## Prerequisites
 
-## Customize configuration
+In order to run the application locally install
+- [nvm](https://github.com/nvm-sh/nvm)
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+## Setup
 
-## Project Setup
+Execute the following commands
 
-```sh
-npm install
+```shell
+# set proper node version
+nvm use
+
+# install dependencies
+npm ci
 ```
 
-### Compile and Hot-Reload for Development
+## Run the app
+Start the [backend](https://github.com/hawser86/norbit-homework-server) first.
 
-```sh
+Start the client
+```shell
 npm run dev
 ```
 
-### Compile and Minify for Production
+Open the http://localhost:5173/ url in you browser (on multiple tabs).
 
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+## Known issues, improvement ideas
+- there are some hard coed strings, which should be coming from config / environment variable
+  - backend URL
+  - initial state of the map (center position, zoom level)
+- there is no error handling
+- there are no tests
+- application state should be stored using a state management solution
+  - now the [App](./src/App.vue) component does many things, which should be handled by e.g. Vuex or Pinia
+- UX could definitely be better :)
+- with a deeper knowledge of OpenLayers I believe the [Map](./src/components/Map.vue) can be simplified
+  and probably optimised
