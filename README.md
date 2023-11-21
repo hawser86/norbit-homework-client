@@ -40,5 +40,5 @@ Open the http://localhost:5173/ url in you browser (on multiple tabs).
 - application state should be stored using a state management solution
   - now the [App](./src/App.vue) component does many things, which should be handled by e.g. Vuex or Pinia
 - UX could definitely be better :)
-- with a deeper knowledge of OpenLayers I believe the [Map](./src/components/Map.vue) can be simplified
+- with a deeper knowledge of OpenLayers I believe the [MapContainer](./src/components/MapContainer.vue) can be simplified
   and probably optimised

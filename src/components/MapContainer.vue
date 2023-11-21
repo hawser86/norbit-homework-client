@@ -9,7 +9,7 @@ import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 
 export default {
-  name: "Map",
+  name: "MapContainer",
   props: {
     boatTrack: Array,
     loadedTrack: Array

@@ -2,7 +2,7 @@
 import ToggleSwitch from "./ToggleSwitch.vue";
 
 export default {
-  name: "Controls",
+  name: "ControlsPanel",
   components: { ToggleSwitch },
   props: {
     isRecordingRunning: Boolean,
@@ -31,7 +31,7 @@ export default {
       </div>
       <div class="block">
         <select :value="selectedTrackId" @change="$emit('update:selectedTrackId', Number($event.target.value))">
-          <option v-for="track in trackList" :value="track.id">
+          <option v-for="track in trackList" :value="track.id" v-bind:key="track.id">
             {{ track.name }}
           </option>
         </select>

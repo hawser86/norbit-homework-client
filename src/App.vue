@@ -1,11 +1,11 @@
 <script>
 import { io } from 'socket.io-client';
-import Map from './components/Map.vue';
-import Controls from './components/Controls.vue';
+import MapContainer from './components/MapContainer.vue';
+import ControlsPanel from './components/ControlsPanel.vue';
 
 export default {
   name: 'App',
-  components: { Map, Controls },
+  components: { MapContainer, ControlsPanel },
   data: () => ({
     boatTrack: [],
     loadedTrack: [],
@@ -54,17 +54,17 @@ export default {
     </div>
 
     <div class="row content">
-      <Map :boat-track="boatTrack" :loaded-track="loadedTrack"></Map>
+      <MapContainer :boat-track="boatTrack" :loaded-track="loadedTrack"></MapContainer>
     </div>
 
     <div class="row footer">
-      <Controls
+      <ControlsPanel
           v-model:is-recording-running="isRecordingRunning"
           @update:is-recording-running="updateRecordingStatus()"
           :track-list="trackList"
           v-model:selected-track-id="selectedTrackId"
           @load-track="loadTrack()"
-      ></Controls>
+      ></ControlsPanel>
     </div>
   </div>
 </template>
