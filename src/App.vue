@@ -7,7 +7,7 @@ export default {
   name: 'App',
   components: { Map, Controls },
   data: () => ({
-    boatPosition: { latitude: 0, longitude: 0, heading: 0 },
+    boatPath: [],
     isRecordingRunning: false,
     socket: io("http://localhost:9876")
   }),
@@ -18,7 +18,7 @@ export default {
   },
   mounted() {
     this.socket.on('boat-position', position => {
-      this.boatPosition = position;
+      this.boatPath = [position.position];
     });
 
     this.socket.on('update-recording-status', isRecordingRunning => {
@@ -35,7 +35,7 @@ export default {
     </div>
 
     <div class="row content">
-      <Map :boat-position="boatPosition"></Map>
+      <Map :boat-path="boatPath"></Map>
     </div>
 
     <div class="row footer">
