@@ -4,7 +4,7 @@ import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import { fromLonLat } from 'ol/proj';
 import { Fill, RegularShape, Stroke, Style } from 'ol/style';
-import { Point } from 'ol/geom';
+import { LineString, Point } from 'ol/geom';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 
@@ -28,6 +28,11 @@ export default {
     refreshBoatTrack() {
       this.source.clear();
       this.source.addFeatures(this.boatTrack.map(this.createTriangle));
+
+      const lines = this.boatTrack
+          .slice(0, -1)
+          .map((position, index) => this.createLine(position, this.boatTrack[index + 1]));
+      this.source.addFeatures(lines);
     },
     createTriangle({ latitude, longitude, heading }) {
       const stroke = new Stroke({ color: 'black', width: 2 });
@@ -44,6 +49,20 @@ export default {
       });
 
       const feature = new Feature(new Point(fromLonLat([longitude, latitude])));
+      feature.setStyle(style);
+
+      return feature;
+    },
+    createLine(from, to) {
+      const stroke = new Stroke({ color: 'red', width: 2 });
+      const style = new Style({
+          stroke: stroke,
+      });
+
+      const points = [fromLonLat([from.longitude, from.latitude]), fromLonLat([to.longitude, to.latitude])];
+      const feature = new Feature({
+        geometry: new LineString(points)
+      });
       feature.setStyle(style);
 
       return feature;
