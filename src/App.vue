@@ -1,5 +1,6 @@
 <script>
 import Map from './components/Map.vue';
+import { io } from 'socket.io-client';
 
 export default {
   name: 'App',
@@ -10,7 +11,10 @@ export default {
       longitude: 20.73998593,
       heading: 3.470315226
     }
-  })
+  }),
+  mounted() {
+    const socket = io("http://localhost:9876");
+  }
 }
 </script>
 
