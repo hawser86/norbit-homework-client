@@ -27,7 +27,7 @@ export default {
   methods: {
     refreshBoatTrack() {
       this.source.clear();
-      this.source.addFeatures(this.boatTrack.map(this.createTriangle));
+      this.source.addFeatures([this.createTriangle(this.boatTrack[this.boatTrack.length - 1])]);
 
       const lines = this.boatTrack
           .slice(0, -1)
