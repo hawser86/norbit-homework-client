@@ -3,7 +3,14 @@ import Map from './components/Map.vue';
 
 export default {
   name: 'App',
-  components: { Map }
+  components: { Map },
+  data: () => ({
+    dummyBoatPosition: {
+      latitude: 48.21339894,
+      longitude: 20.73998593,
+      heading: 3.470315226
+    }
+  })
 }
 </script>
 
@@ -14,7 +21,7 @@ export default {
     </div>
 
     <div class="row content">
-      <Map></Map>
+      <Map :boat-position="dummyBoatPosition"></Map>
     </div>
 
     <div class="row footer">
