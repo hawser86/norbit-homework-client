@@ -11,23 +11,23 @@ import VectorSource from 'ol/source/Vector';
 export default {
   name: "Map",
   props: {
-    boatPath: Array
+    boatTrack: Array
   },
   data: () => ({
     source: new VectorSource()
   }),
   watch: {
-    boatPath: {
+    boatTrack: {
       handler() {
-        this.refreshBoatPath();
+        this.refreshBoatTrack();
       },
       deep: true
     }
   },
   methods: {
-    refreshBoatPath() {
+    refreshBoatTrack() {
       this.source.clear();
-      this.source.addFeatures(this.boatPath.map(this.createTriangle));
+      this.source.addFeatures(this.boatTrack.map(this.createTriangle));
     },
     createTriangle({ latitude, longitude, heading }) {
       const stroke = new Stroke({ color: 'black', width: 2 });
@@ -50,7 +50,7 @@ export default {
     }
   },
   mounted() {
-    this.refreshBoatPath();
+    this.refreshBoatTrack();
 
     const vectorLayer = new VectorLayer({
       source: this.source,
